@@ -1,0 +1,149 @@
+*:focus {
+  outline: none;
+}
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: "Nunito";
+  margin-bottom: 2em;
+}
+header {
+  position: fixed;
+  min-width: 100%;
+  text-align: center;
+  top: 0;
+  background: linear-gradient(270deg, #7ffddc, #3bec90, #b680f5);
+  background-size: 600% 600%;
+  animation: Gradient 10s ease infinite;
+  z-index: 999999999999999999999999999999999999999999999;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: .3em;
+}
+input {
+  width: 33%;
+  align-self: center;
+  margin-bottom: 1em;
+  padding: .3em;
+  border: none;
+}
+h1 {
+  font-family: "Nunito";
+  color: rgba(255,255,255,0.8);
+}
+img {
+  height: 200px;
+  margin: 10% 0%;
+  z-index: 10;
+  opacity: .75;
+  position: relative;
+}
+img:hover {
+  opacity: 1;
+  transition: .3s;
+}
+h3 {
+  z-index: 2;
+  font-size: 1.5em;
+}
+ul {
+  padding: 0;
+  z-index: 2;
+  display: block;
+  transition: .3s;
+}
+img:focus + ul {
+  display: block;
+}
+li {
+  list-style: none;
+  margin-bottom: .25em;
+}
+body>main>div {
+  position: relative;
+  margin: 0 11%;
+  padding: 0;
+}
+
+body>main>div:focus-within {
+  background: linear-gradient(45deg, #7ffddc, #3bec90, #b680f5);
+  background-size: 400% 400%;
+  animation: Gradient 10s ease infinite;
+  border-radius: 5px;
+  transition: .3s;
+  box-shadow: 17px 18px 70px -16px rgba(128,126,128,1);
+  animation: none;
+}
+
+body>main>div:focus-within img {
+  opacity: 1;
+  animation: Gradient 0s ease infinite;
+}
+
+body>main>div>p {
+}
+
+body>main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 1em;
+  grid-row-gap: 3em;
+  margin-top: 10em;
+}
+
+#naarVis {
+  background: linear-gradient(45deg, #7ffddc, #3bec90, #b680f5);
+  background-size: 400% 400%;
+  animation: Gradient 10s ease infinite;
+  padding: .5em 1em;
+  position: fixed;
+  top: 91%;
+  left: 89%;
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+  z-index: 9999
+}
+
+@keyframes Gradient {
+  0%
+  {
+    background-position:0% 50%
+  }
+  50%
+  {
+    background-position:100% 50%
+  }
+  100%
+  {
+    background-position:0% 50%
+  }
+}
+@keyframes rotate {
+  0%
+  {
+    /* opacity: .75; */
+    transform: rotate(0deg) scale(1);
+  }
+  25%
+  {
+    /* opacity: 1; */
+    transform: rotate(5deg) scale(1.1);
+  }
+  50%
+  {
+    /* opacity: .75; */
+    transform: rotate(0deg) scale(1.2);
+  }
+  75%
+  {
+    /* opacity: 1; */
+    transform: rotate(-5deg)  scale(1.1);
+  }
+  100%
+  {
+    /* opacity: .75; */
+    transform: rotate(0) scale(1);
+  }
+}

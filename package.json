@@ -1,0 +1,24 @@
+{
+  "name": "OBA",
+  "version": "1.0.0",
+  "description": "OBA serv side",
+  "main": "index.ejs",
+  "scripts": {
+    "uglify": "uglifyjs public/js/index.js > public/js/minifiedbundle.js",
+    "start": "npm run uglify | node server.js"
+  },
+  "author": "Robin Frugte",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.15.2",
+    "browserify": "^16.1.1",
+    "http": "0.0.0",
+    "node-fetch": "^2.1.1",
+    "request": "^2.81.0",
+    "uglify-js": "^3.3.16"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babelify": "^8.0.0"
+  }
+}
