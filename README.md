@@ -4,6 +4,8 @@
 
 On this site you can get an overview of how many street the Mayors of Amsterdam destroyed in their term.
 
+[Client side](https://robinfrugte97.github.io/project1-quick-hack-prototype/)
+
 
 Regular loading time: 
 ![](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/client-side.png)
