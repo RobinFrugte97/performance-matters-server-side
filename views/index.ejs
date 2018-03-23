@@ -6,21 +6,21 @@
 	</header>
 
 	<main id="images">
-		<% for (i = 0; i < rows.length; ++i) { %>
-			<div class="<%= rows[i].name.value.slice(-4) %>">
-				<h3><%= rows[i].name.value %></h3>
-				<p>Functie periode: <%= Number(rows[i].start.value.slice(0, 4)) %> - <%= Number(rows[i].end.value.slice(0, 4)) %></p>
-				<img src="<%= rows[i].image.value %>" alt="">
+		<%_ for (i = 0; i < rows.length; ++i) { %>
+			<div class="<%= rows[i].name.value.slice(-4) _%>">
+				<h3><%= rows[i].name.value _%></h3>
+				<p>Functie periode: <%= Number(rows[i].start.value.slice(0, 4)) _%> - <%= Number(rows[i].end.value.slice(0, 4)) _%></p>
+				<img src="<%= rows[i].image.value _%>" alt="">
 				<ul>
-					<% for (x = 0; x < streetRows.length; ++x) { %>
-					  <% var gesloopt = Number(streetRows[x].end.value) %>
-					  <% if (gesloopt > Number(rows[i].start.value.slice(0, 4)) && gesloopt < Number(rows[i].end.value.slice(0, 4))) { %>
-					  <li class="<%= rows[i].name.value.slice(-4) %>"><%= streetRows[x].label.value %> gesloopt in <%= streetRows[x].end.value %></li>
-					  <% } %>
-					<% } %>
+					<%_ for (x = 0; x < streetRows.length; ++x) { %>
+					  <%_ var gesloopt = Number(streetRows[x].end.value) _%>
+					  <%_ if (gesloopt > Number(rows[i].start.value.slice(0, 4)) && gesloopt < Number(rows[i].end.value.slice(0, 4))) { %>
+					  <li class="<%= rows[i].name.value.slice(-4) _%>"><%= streetRows[x].label.value _%> gesloopt in <%= streetRows[x].end.value _%></li>
+					  <% } _%>
+					<% } _%>
 				</ul>
 			</div>
-		<% } %>
+		<% } _%>
 	</main>
 
 	<a id="naarVis" href="visualisatie.html">Visualisatie</a>
