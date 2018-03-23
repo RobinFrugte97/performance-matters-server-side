@@ -1,4 +1,5 @@
 var express = require('express');
+var minifyHTML = require('express-minify-html');
 var request = require('request');
 var ejs = require('ejs');
 var fetch = require('node-fetch');
@@ -12,6 +13,19 @@ express.static('global')
 app.use(express.static('public'))
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}));
 
 app.get("/", function (req, res) {
   fetch(sparql.queryurl)
