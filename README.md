@@ -98,5 +98,5 @@ When the user visits a page while their network is offline, the user will keep a
 
 This is the performance audit after implementing the service worker:
 
-![newAudit](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/newaudits.png)
+![newAudit](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/newaudit.png)
 
