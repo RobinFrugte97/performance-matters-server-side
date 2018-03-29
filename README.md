@@ -83,6 +83,7 @@ In my case, the service worker caches a couple of important files no matter what
 - The offline page
 - The main css file
 - The bundled JavaScript file
+Jobstory: When there is no network available, I want to offer the basic functionality to the users, so the users can look up which mayor destroyed the most streets.
 
 Furthermore, the service worker caches the pages you visit. Should your netwerk be offline, the service worker is able to give you the pages that have been cached in the past. If you visit a page that has not been cached yet when offline, the service worker will server you the offline page.
 
