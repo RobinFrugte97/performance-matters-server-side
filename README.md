@@ -24,14 +24,9 @@ This is list of modules you need to include in order to use the tools.
 
 ## NPM
 
-Use these command in the command line interface to use all components
+Use this command in the command line interface to use all components
 
-- `npm install express --save`
-- `npm install --save --production express-minify-html express`
-- `npm install ejs`
-- `npm install uglify-js -g`
-- `npm install -g browserify`
-- `npm install node-fetch --save` 
+- `npm install`
 
 
 ## Bundled JS
@@ -74,8 +69,34 @@ You can use the code above to minify your html. You can also use that code to co
 ![](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/somewhitespaceremoved.png)
 
 
-## Audit 
+## Audit after performance updates
 
 End audit on non-throttled network:
 
 ![](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/audit.png)
+
+
+## Service worker
+
+The main purpose of the site is to have an overview of the amount of streets each mayor of Amsterdam has destroyed or was destroyed during their term. To make sure you are still able to have an overview even if your network is offline, I use a service worker.
+In my case, the service worker caches a couple of important files no matter what:
+- The offline page
+- The main css file
+- The bundled JavaScript file
+
+Furthermore, the service worker caches the pages you visit. Should your netwerk be offline, the service worker is able to give you the pages that have been cached in the past. If you visit a page that has not been cached yet when offline, the service worker will server you the offline page.
+
+![offlinepage](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/offlinepage.png)
+
+### Notify user
+
+When the user visits a page while their network is offline, the user will keep a notification in the bottom of their screen to remind them they are currently visiting an offline version of the page.
+
+![offlinenotification](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/offlinenotification.png)
+
+## Audit after service worker
+
+This is the performance audit after implementing the service worker:
+
+![](https://github.com/RobinFrugte97/performance-matters-server-side/blob/master/screenshots/newaudits.png)
+
