@@ -21,6 +21,9 @@ header {
   flex-direction: column;
   margin-bottom: .3em;
 }
+header > a {
+  text-decoration-color: rgba(255,255,255,0.8);
+}
 input {
   width: 33%;
   align-self: center;
@@ -31,6 +34,9 @@ input {
 h1 {
   font-family: "Nunito";
   color: rgba(255,255,255,0.8);
+}
+h2 {
+  margin-top: 10em;
 }
 img {
   height: 200px;
@@ -104,6 +110,21 @@ body>main {
   text-decoration: none;
   font-size: 1.5em;
   z-index: 9999
+}
+
+#offline {
+  display: none;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: red;
+  transition: .3s ease;
+  position: fixed;
+  z-index: 10000000000000;
+}
+
+#offline p {
+  color: white;
 }
 
 @keyframes Gradient {

@@ -25,7 +25,7 @@ app.use(minifyHTML({
         removeEmptyAttributes:     true,
         minifyJS:                  true
     }
-}));
+}))
 
 app.get("/", function (req, res) {
   fetch(sparql.queryurl)
@@ -50,8 +50,17 @@ app.get("/", function (req, res) {
     // if there is any error you will catch them here
     console.log(error);
   });
-
 })
+
+app.get("/visualisatie", function (req, res) {
+  res.render('visualisatie.ejs')
+})
+
+app.get("./offline/", function (req, res) {
+  res.render("/index.html")
+})
+
+
 var server = app.listen(3000, function () {
    console.log('server is running on port 3000')
 })

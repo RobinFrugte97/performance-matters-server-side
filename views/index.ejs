@@ -1,7 +1,7 @@
 <% include head.ejs %>
 <body>
 	<header>
-		<h1>Slopende burgemeesters van Amsterdam</h1>
+		<a href="/"><h1>Slopende burgemeesters van Amsterdam</h1></a>
 		<input id="userInput" type="text" name="" value="" placeholder="Zoek een burgemeester...">
 	</header>
 
@@ -23,7 +23,13 @@
 		<% } _%>
 	</main>
 
-	<a id="naarVis" href="visualisatie.html">Visualisatie</a>
-	<script src="/js/minifiedbundle.js"></script>
+	<a id="naarVis" href="/visualisatie">Visualisatie</a>
+	<% include offline.ejs %>
+	<script src="/js/bundle.js"></script>
+	<script>
+		if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/sw.js');
+		}
+	</script>
 </body>
 </html>

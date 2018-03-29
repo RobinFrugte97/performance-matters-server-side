@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Visualisatie</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:700" rel="stylesheet">
+
+	<style type="text/css">
+
+		*:focus {
+			outline: none;
+		}
+		body#overflowHidden {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			font-family: "Nunito";
+			margin-bottom: 2em;
+      overflow-x: hidden;
+		}
+
+    .dontShow {
+      overflow-y: hidden;
+    }
+
+    .show {
+      overflow-y: scroll;
+		}
+
+		header {
+			position: fixed;
+			min-width: 100%;
+			text-align: center;
+			top: 0;
+			background: linear-gradient(270deg, #7ffddc, #3bec90, #b680f5);
+			background-size: 600% 600%;
+			animation: Gradient 10s ease infinite;
+			z-index: 999999999999999999999999999999999999999999999;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: .3em;
+		}
+		input {
+			width: 33%;
+			align-self: center;
+			margin-bottom: 1em;
+			padding: .3em;
+			border: none;
+		}
+		h1 {
+			font-family: "Nunito";
+			color: rgba(255,255,255,0.8);
+		}
+		img {
+			height: 200px;
+			margin: 10% 0%;
+			z-index: 10;
+			opacity: .75;
+			position: relative;
+		}
+		img:hover {
+			opacity: 1;
+			transition: .3s;
+		}
+		h3 {
+			z-index: 2;
+			font-size: 1.5em;
+		}
+		ul {
+			padding: 0;
+			z-index: 2;
+			display: none;
+			transition: .3s;
+		}
+		img:focus + ul {
+			display: block;
+		}
+		li {
+			list-style: none;
+			margin-bottom: .25em;
+		}
+		body>main>div {
+      border-radius: 100%;
+      font-size: 1.5em !important;
+		}
+
+		body>main>div:focus-within {
+			background-color: gainsboro;
+    	border-radius: 5%;
+			transition: .3s;
+			box-shadow: 17px 18px 70px -16px rgba(128,126,128,1);
+		}
+
+		body>main>p {
+      transform: translate(-50%;);
+		}
+
+		body>main {
+      display: flex;
+      flex-direction: column;
+	    margin-top: 6em;
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      align-items: center;
+		}
+
+    #naarVis {
+			background: linear-gradient(45deg, #7ffddc, #3bec90, #b680f5);
+	    background-size: 400% 400%;
+	    animation: Gradient 10s ease infinite;
+	    padding: .5em 1em;
+	    position: fixed;
+	    top: 91%;
+	    left: 87%;
+	    color: white;
+	    text-decoration: none;
+	    font-size: 1.5em;
+		}
+
+    #sort {
+      background: linear-gradient(45deg, #7ffddc, #3bec90, #b680f5);
+	    background-size: 400% 400%;
+	    animation: Gradient 10s ease infinite;
+	    padding: .5em 1em;
+	    position: fixed;
+	    top: 91%;
+	    left: 81%;
+	    color: white;
+	    text-decoration: none;
+	    font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .absolute {
+      position: absolute;
+    }
+
+    .nonAbsolute {
+      position: static;
+    }
+
+		@keyframes Gradient {
+			0%
+			{
+				background-position:0% 50%
+			}
+    	50%
+			{
+				background-position:100% 50%
+			}
+    	100%
+			{
+				background-position:0% 50%
+			}
+		}
+	</style>
+</head>
+<body id="overflowHidden" class="dontShow">
+<header>
+	<h1>Wanneer zijn de meeste straten gesloopt?</h1>
+</header>
+<main id="visualisatie"></main>
+<a id="naarVis" href="/">Burgemeesters</a>
+<div id="sort">
+  Sort
+</div>
+<script>
+
+	var sparqlquery = `
+		PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    PREFIX p: <http://www.wikidata.org/prop/>
+    PREFIX ps: <http://www.wikidata.org/prop/statement/>
+    PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT ?person
+   (SAMPLE(?image) as ?image)
+    (SAMPLE(?title) as ?title)
+    ?name ?start ?end
+    WHERE {
+     SERVICE <https://query.wikidata.org/sparql>
+      {
+       ?person p:P39 ?bn .
+       ?person rdfs:label ?name .
+       ?bn ps:P39 wd:Q13423495 .
+       OPTIONAL { ?bn pq:P580 ?start . }
+       OPTIONAL { ?bn pq:P582 ?end . }
+    	 FILTER(lang(?name) = 'nl')
+      }
+     ?url dc:subject ?pers .
+     ?pers owl:sameAs ?person .
+     ?url foaf:depiction ?image .
+     ?url dc:title ?title .
+		}
+		ORDER BY ?start
+	`;
+
+
+	var encodedquery = encodeURIComponent(sparqlquery);
+
+	var queryurl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/hva2018/sparql?default-graph-uri=&query=' + encodedquery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+	var straatquery = `
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+		PREFIX sem: <http://semanticweb.cs.vu.nl/2009/11/sem/>
+		PREFIX hg: <http://rdf.histograph.io/>
+
+		SELECT ?end{
+			?straat sem:hasEarliestEndTimeStamp ?end ;
+			a hg:Street ;
+			rdfs:label ?label .
+			FILTER (year(xsd:dateTime(?end)) < 2017)
+		}
+		ORDER BY ?end
+	`;
+
+	var encodedquery2 = encodeURIComponent(straatquery);
+
+	var queryurl2 = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/hva2018/sparql?default-graph-uri=&query=' + encodedquery2 + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+	fetch(queryurl)
+	.then((resp) => resp.json()) // transform the data into json
+  	.then(function(data) {
+		rows = data.results.bindings; // get the results
+		return rows;
+		})
+		fetch(queryurl2)
+		.then((resp) => resp.json()) // transform the data into json
+			.then(function(data) {
+				streetRows = data.results.bindings;
+        visdiv = document.getElementById('visualisatie');
+				console.log(streetRows);
+        var current = null;
+        var cnt = 0;
+        var zIndex = 0;
+        for (var i = 0; i < streetRows.length; i++) {
+            function random_rgba() {
+                var o = Math.round, r = Math.random, s = 255;
+                return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',0.75)';
+            }
+            var randomColor = random_rgba();
+            var jaarBalJaar = document.createElement('p');
+            jaarBalJaar.innerHTML = streetRows[i]['end']['value'];
+            jaarBalJaar.classList.add("absolute")
+            jaarBalJaar.setAttribute('Style', 'margin-top: 45%;');
+            if (streetRows[i]['end']['value'] != current) {
+                if (cnt > 0) {
+                    visdiv.appendChild(jaarBalJaar);
+                    function min_size() {
+                      if ((cnt/3) <= 1) {
+                        return cnt = 1.3
+                      } else {
+                        return cnt/3
+                      }
+                    }
+                    var fontSize = min_size();
+                    jaarBalJaar.setAttribute('Style', 'font-size: ' + fontSize +'em; top: ' + (Math.random() * 700 + 100) + 'px; left: ' + (Math.random() * 1400 + 150) + 'px; color: ' + randomColor + '; max-width: 20em; max-height: 20em; margin: 0; z-index: ' + zIndex + ';');
+                }
+                current = streetRows[i]['end']['value'];
+                cnt = 1;
+                zIndex = 0;
+            } else {
+                cnt++;
+                zIndex--;
+            }
+            if (cnt > 0) {
+            }
+        }
+        var pS = document.querySelectorAll('p');
+        var sorteer = document.getElementById("sort");
+        sorteer.addEventListener("click", function(){
+
+            for (i = 0; i < pS.length; ++i) {
+              if (pS[i].classList.contains("absolute")){
+                pS[i].classList.remove("absolute");
+                pS[i].classList.add("nonAbsolute");
+                document.querySelector('body').classList.remove("dontShow");
+                document.querySelector('body').classList.add("show");
+              } else {
+                pS[i].classList.remove("nonAbsolute");
+                pS[i].classList.add("absolute");
+                document.querySelector('body').classList.remove("show");
+                document.querySelector('body').classList.add("dontShow");
+              }
+            }
+        });
+					})
+					.catch(function(error) {
+						// if there is any error you will catch them here
+						console.log(error);
+					});
+</script>
+</body>
+</html>
